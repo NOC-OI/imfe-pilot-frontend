@@ -1,0 +1,134 @@
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+.center-element{
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.table-yaxis{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-orientation: mixed;
+}
+.all-icon{
+  background-size: contain;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  width: 2rem !important;
+  height: 2rem !important;
+  margin-left: -1rem !important;
+  margin-top: -1rem !important;
+  position: relative;
+}
+
+.normal-button{
+  /* height: 2rem; */
+  color: #000000;
+  border-radius: 8px;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  box-shadow: 0px 4px 4px #000000;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+}
+
+.normal-button:hover {
+    background: #FFD886;
+    color: #696969;
+}
+
+.normal-button-big{
+  /* height: 2rem; */
+  color: #000000;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px #000000;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+}
+
+.normal-button-big:hover {
+    background: #FFD886;
+    color: #696969;
+}
+
+
+
+.circle-color{
+  position: absolute;
+  -webkit-text-stroke: 1px rgb(30,30,30);
+}
+
+.active-text{
+  color: #D49511 !important;
+}
+.active svg{
+  color: #FFD886 !important;
+}
+.active{
+  color: #FFD886 !important;
+}
+
+
+.active-button{
+  color: #000000;
+  background: #FFD886
+}
+.active-button:hover {
+  color: #FFFFFF;
+}
+
+.ant-picker-dropdown{
+  z-index: 9999 !important;
+}
+
+.leaflet-container a{
+  display: flex;
+  justify-content: center !important;
+  color: #3eadcf !important;
+}
+
+.leaflet-container a svg{
+  width: 1.5rem;
+}
+
+.leaflet-control-attribution a{
+  display: flex !important;
+}
+
+.leaflet-control-attribution{
+  display: none;
+}
+
+
+
+.leaflet-container a:hover{
+  color: #D49511 !important;
+}
+
+.leaflet-container a:focus{
+  outline: none !important;
+  border-color: rgba(0,0,0,0) !important;
+}
+
+.leaflet-popup-content-wrapper{
+  max-width: 22rem;
+  max-height: 27rem;
+  overflow-y: auto;
+}
+.leaflet-popup-content{
+  max-width: 20rem;
+}
+
+.leaflet-popup-close-button span{
+  font-size: 2rem;
+}
+/* expanded .leaflet-control-layers-toggle{
+  display: none !important;
+} */

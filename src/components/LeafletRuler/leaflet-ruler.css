@@ -1,0 +1,41 @@
+.leaflet-ruler{
+  height: 2.25rem;
+  width: 2.25rem;
+  background-image: url("/ruler_icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.leaflet-ruler:hover{
+  background-image: url("/ruler_icon-colored.png");
+}
+.leaflet-ruler-clicked{
+  height: 2.25rem;
+  width: 2.25rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("/ruler_icon-colored.png");
+  border-color: chartreuse !important;
+}
+.leaflet-bar{
+  background-color: #ffffff;
+}
+.leaflet-control {
+  cursor: pointer;
+}
+.result-tooltip{
+  background-color: white;
+  border-width: medium;
+  border-color: #de0000;
+  font-size: smaller;
+}
+.moving-tooltip{
+  background-color: rgba(255, 255, 255, .7);
+  background-clip: padding-box;
+  opacity: 0.5;
+  border: dotted;
+  border-color: red;
+  font-size: smaller;
+}
+.plus-length{
+  padding-left: 2.8125rem;
+}

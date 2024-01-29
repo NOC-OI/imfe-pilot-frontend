@@ -1,0 +1,102 @@
+build-job-oracle-arm:
+  stage: build
+  tags: 
+    - shell
+    - oracle
+    - arm
+  script:
+    - CONTAINER_NAME=$CI_REGISTRY/nocacuk/ocean-informatics/imfepilot/frontend:latest
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    #write env file, variables should be (mostly) supplied as CI variables.
+    - ./make_env.sh
+    - docker build -t $CONTAINER_NAME .
+  environment:
+    name: Oracle-ARM
+
+build-job-jasmin:
+  stage: build
+  tags: 
+    - shell
+    - jasmin
+  script:
+    - CONTAINER_NAME=docker-repo.bodc.me/oceaninfo/imfe-pilot/frontend:latest
+    #write env file, variables should be (mostly) supplied as CI variables.
+    - ./make_env.sh
+    - docker build -t $CONTAINER_NAME .
+  environment:
+    name: JASMIN
+
+#build-job-oracle-x86:
+#  stage: build
+#  tags: 
+#    - shell
+#    - oracle
+#    - x86
+#  script:
+#    - CONTAINER_NAME=uk-london-1.ocir.io/lrl8vbuxj1ma/frontend:latest
+    #write env file, variables should be (mostly) supplied as CI variables.
+#    - ./make_env.sh
+#    - docker build -t $CONTAINER_NAME .
+#  environment:
+#    name: Oracle-x86
+
+deploy-job-oracle-arm:
+  stage: deploy
+  tags:
+      - shell
+      - oracle
+      - arm
+  rules: #only deploy on the master branch
+    - if: '$CI_COMMIT_BRANCH == "master"'
+  script:
+    - CONTAINER_NAME=$CI_REGISTRY/nocacuk/ocean-informatics/imfepilot/frontend:latest
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY       
+    - docker push $CONTAINER_NAME
+    - ./make_env.sh
+    - docker stop frontend || true
+    - docker container rm frontend || true
+    - docker run --rm -d -p 8080:80 --env-file ./.env --name frontend $CONTAINER_NAME
+  environment:
+    name: Oracle-ARM
+
+deploy-job-jasmin:
+  stage: deploy
+  tags:
+      - shell
+      - jasmin
+  rules: #only deploy on the master branch
+    - if: '$CI_COMMIT_BRANCH == "master"'
+  script:
+    - CONTAINER_NAME=docker-repo.bodc.me/oceaninfo/imfe-pilot/frontend:latest
+    #note: we must have done a "docker login docker-repo.bodc.me" manually on the build and web VMs before this pipeline can run
+    - docker push $CONTAINER_NAME
+    - ssh web "docker pull $CONTAINER_NAME"
+    - ssh web "mkdir -p ~/frontend"
+    - ./make_env.sh
+    - scp .env web:frontend/.env
+    - ssh web "cd frontend && docker stop frontend && docker container rm frontend && docker run -d -p 8080:80 --env-file ./.env --name frontend $CONTAINER_NAME"
+  environment:
+    name: JASMIN
+
+#deploy-job-oracle-x86:
+#  stage: deploy
+#  tags:
+#      - shell
+#      - oracle
+#      - x86
+#  rules: #only deploy on the master branch
+#    - if: '$CI_COMMIT_BRANCH == "master"'
+#  script:
+#    - CONTAINER_NAME=uk-london-1.ocir.io/lrl8vbuxj1ma/frontend:latest
+    #note: we must have done a "docker login uk-london-1.ocir.io" manually on the build and web VMs before this pipeline can run
+#    - docker push $CONTAINER_NAME
+#    - ssh web "docker pull $CONTAINER_NAME"
+#    - ssh web "mkdir -p ~/frontend"
+#    - scp .env web:frontend/.env
+#    - ssh web "cd frontend && docker stop frontend && docker container rm frontend && docker run -d -p 8080:80 --env-file ./.env --name frontend $CONTAINER_NAME"
+#  environment:
+#    name: Oracle-x86
+
+#trigger-job:
+#  trigger:
+#    project: nocackuk/ocean-informatics/imfepilot/frontend_test

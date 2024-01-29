@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    "babel-plugin-transform-import-meta",
+    "@babel/transform-runtime"
+  ],
+  "presets": [
+    [
+      "babel-preset-vite",
+      {
+        "env": true,
+        "glob": true,
+        "hot": true // defaults to true
+      }
+    ],
+    ["@babel/preset-env", { "targets": { "node": "current" } }],
+    "@babel/preset-typescript",
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ]
+}
