@@ -219,8 +219,6 @@ export function DataExplorationTypeOptions({
     setGetPolyline((getPolyline: any) => !getPolyline)
     setActualLayer([subLayers[subLayer].url])
   }
-  console.log(subLayer)
-  console.log(subLayers[subLayer].protected)
   return (
     <LayerTypeOptionsContainer>
       <div

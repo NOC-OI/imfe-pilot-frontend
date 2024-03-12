@@ -18,7 +18,6 @@ export function PhotoPage() {
   const [layerAction, setLayerAction] = useState('')
   const { id } = useParams()
 
-  console.log(showPhotos, setContrast, layerAction)
   return (
     <PhotoPageContainer>
       <SideBar>

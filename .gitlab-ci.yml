@@ -19,7 +19,8 @@ build-job-jasmin:
     - shell
     - jasmin
   script:
-    - CONTAINER_NAME=docker-repo.bodc.me/oceaninfo/imfe-pilot/frontend:latest
+    - CONTAINER_NAME=$CI_REGISTRY/nocacuk/ocean-informatics/imfepilot/frontend:latest
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     #write env file, variables should be (mostly) supplied as CI variables.
     - ./make_env.sh
     - docker build -t $CONTAINER_NAME .
@@ -67,14 +68,16 @@ deploy-job-jasmin:
   rules: #only deploy on the master branch
     - if: '$CI_COMMIT_BRANCH == "master"'
   script:
-    - CONTAINER_NAME=docker-repo.bodc.me/oceaninfo/imfe-pilot/frontend:latest
-    #note: we must have done a "docker login docker-repo.bodc.me" manually on the build and web VMs before this pipeline can run
+    - CONTAINER_NAME=$CI_REGISTRY/nocacuk/ocean-informatics/imfepilot/frontend:latest
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY       
     - docker push $CONTAINER_NAME
+    - ./make_env.sh
+    - ssh web "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
     - ssh web "docker pull $CONTAINER_NAME"
     - ssh web "mkdir -p ~/frontend"
     - ./make_env.sh
     - scp .env web:frontend/.env
-    - ssh web "cd frontend && docker stop frontend && docker container rm frontend && docker run -d -p 8080:80 --env-file ./.env --name frontend $CONTAINER_NAME"
+    - ssh web "cd frontend && docker ps -a | grep -q "frontend" && docker stop frontend && docker container rm frontend || echo && docker run -d -p 8080:80 --env-file ./.env --name frontend $CONTAINER_NAME"
   environment:
     name: JASMIN
 

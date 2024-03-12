@@ -90,7 +90,7 @@
           "type": "selector",
           "tableName": "Order",
           "layers": {
-            "Seabed Images": ["NBN"]
+            "Biology": ["NBN"]
           }
         },
         {
@@ -98,7 +98,7 @@
           "type": "selector",
           "tableName": "Genus",
           "layers": {
-            "Seabed Images": ["NBN"]
+            "Biology": ["NBN"]
           }
         },
         {
@@ -106,7 +106,7 @@
           "type": "selector",
           "tableName": "Scientific name",
           "layers": {
-            "Seabed Images": ["NBN"]
+            "Biology": ["NBN"]
           }
         },
         {
@@ -114,7 +114,7 @@
           "type": "selector",
           "tableName": "Start date",
           "layers": {
-            "Seabed Images": ["NBN"]
+            "Biology": ["NBN"]
           }
         },
         {
@@ -122,7 +122,7 @@
           "type": "selector",
           "tableName": "Start date",
           "layers": {
-            "Seabed Images": ["NBN"]
+            "Biology": ["NBN"]
           }
         }
       ]
